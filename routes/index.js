@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+// router.use(express.static(path.join(__dirname, "../../build")));
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  // res.sendFile(path.join(__dirname, "../../build", "index.html"));
+  res.send("response");
 });
 
 router.post("/login", function(req, res, next){
@@ -25,6 +28,15 @@ router.get("/logout", function(req, res, next){
   }
   else {
     res.send({code: 0, message: "No Session Detected"});
+  }
+})
+
+router.get("/checkLogin", function (req, res, next){
+  if(req.session.loggedIn){
+    res.send({code: 1, message: "Logged In"});
+  }
+  else {
+    res.send({code: 0, message: "Logged Out"});
   }
 })
 
